@@ -1,4 +1,6 @@
-# nixos-config
+# NixOS System Configurations
+
+![Screenshot](https://raw.githubusercontent.com/caluckenbach/nixos-config/main/.github/images/screenshot.png)
 
 NixOS and Home Manager configuration using flakes for aarch64-linux (VMware guest).
 
@@ -38,6 +40,9 @@ home-manager switch --flake .#morpheus
 - **Shell:** Zsh with starship prompt, autosuggestions, syntax highlighting
 - **Editor:** Neovim (default)
 - **Terminal:** Ghostty
-- **Tools:** eza, bat, ripgrep, fzf, zoxide, direnv, lazygit, yazi
+- **Window Manager:** i3 with i3status-rust bar
+- **Tools:** eza, bat, ripgrep, fzf, zoxide, direnv, lazygit, yazi, fastfetch
+- **Dev:** rustup (for toolchain + rust-analyzer), bacon, bun, uv, gcc
 - **AI:** claude-code, amp-cli
-- **Git:** Configured with pull.rebase and push.autoSetupRemote
+- **VCS:** Git, Jujutsu
+- **LSP/Formatters:** nil, nixfmt, lua-language-server, stylua, ruff, ty

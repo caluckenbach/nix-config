@@ -47,7 +47,30 @@
       enable = true;
       package = pkgs.i3;
       config = {
-        bars = [ ];
+        bars = [
+          {
+            position = "bottom";
+            statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${config.xdg.configHome}/i3status-rust/config-bottom.toml";
+            colors = {
+              background = "#282828";
+              statusline = "#ebdbb2";
+              focusedWorkspace = {
+                border = "#458588";
+                background = "#458588";
+                text = "#ebdbb2";
+              };
+              inactiveWorkspace = {
+                border = "#282828";
+                background = "#282828";
+                text = "#928374";
+              };
+            };
+            fonts = {
+              names = [ "TX-02" ];
+              size = 12.0;
+            };
+          }
+        ];
         window.border = 0;
         defaultWorkspace = "1";
 
@@ -67,9 +90,6 @@
         };
       };
 
-      extraConfig = ''
-        for_window [class="^Ghostty$"] fullscreen enable
-      '';
     };
   };
 
@@ -78,9 +98,13 @@
     font-size = 15
     theme = Gruvbox Dark
 
+    # Hide window decorations and tab bar
+    window-decoration = none
+    gtk-titlebar = false
+
     # Visual polish
-    window-padding-x = 12
-    window-padding-y = 8
+    window-padding-x = 8
+    window-padding-y = 6
     cursor-style = bar
     cursor-style-blink = false
 
@@ -91,7 +115,6 @@
 
     mouse-hide-while-typing = true
     mouse-scroll-multiplier = 2
-    fullscreen = true
 
     # Prevent app from quitting when last window closes (like macOS)
     quit-after-last-window-closed = false
@@ -259,5 +282,28 @@
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
+  };
+
+  programs.i3status-rust = {
+    enable = true;
+    bars.bottom = {
+      theme = "gruvbox-dark";
+      icons = "awesome6";
+      blocks = [
+        {
+          block = "memory";
+          format = " $mem_used/$mem_total ";
+        }
+        {
+          block = "cpu";
+          format = " $utilization ";
+        }
+        {
+          block = "disk_space";
+          path = "/";
+          format = " $available ";
+        }
+      ];
+    };
   };
 }

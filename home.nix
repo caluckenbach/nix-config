@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   home.username = "morpheus";
@@ -22,23 +27,36 @@
     lazygit
     bun
     uv
+    ruff
+    ty
     amp-cli
     claude-code
+    rustup
+    gcc
+    # nvim related
+    nil
+    nixfmt-rfc-style
   ];
 
   xsession = {
     enable = true;
     windowManager.i3 = {
       enable = true;
-      package= pkgs.i3;
+      package = pkgs.i3;
       config = {
-        bars = [];
+        bars = [ ];
         window.border = 0;
         defaultWorkspace = "1";
 
         startup = [
-          { command = "vmware-user-suid-wrapper"; notification = false; }
-          { command = "ghostty"; notification = false; }
+          {
+            command = "vmware-user-suid-wrapper";
+            notification = false;
+          }
+          {
+            command = "ghostty";
+            notification = false;
+          }
         ];
 
         keybindings = lib.mkOptionDefault {

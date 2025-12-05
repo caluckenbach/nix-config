@@ -9,21 +9,28 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
-  let
-    system = "aarch64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
-  in {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      inherit system;
-      specialArgs = { inherit inputs; };
-      modules = [ ./configuration.nix ];
-    };
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }@inputs:
+    let
+      system = "aarch64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+    {
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs; };
+        modules = [ ./configuration.nix ];
+      };
 
-    homeConfigurations.morpheus = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      extraSpecialArgs = { inherit inputs; };
-      modules = [ ./home.nix ];
+      homeConfigurations.morpheus = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = { inherit inputs; };
+        modules = [ ./home.nix ];
+      };
     };
-  };
 }

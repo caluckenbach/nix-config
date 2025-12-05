@@ -23,7 +23,10 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
-  networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
+  networking.nameservers = [
+    "1.1.1.1"
+    "1.0.0.1"
+  ];
   networking.networkmanager.dns = "none";
 
   # Set your time zone.
@@ -73,8 +76,9 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    git
     gnupg
+    killall
+    xclip
   ];
 
   # Enable zsh system-wide (required for login shell)

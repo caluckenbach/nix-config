@@ -116,4 +116,16 @@
 
   services.getty.autologinUser = "morpheus";
 
+  fileSystems."/mnt/hgfs" = {
+    device = ".host:/";
+    fsType = "fuse./run/current-system/sw/bin/vmhgfs-fuse";
+    options = [
+      "umask=22"
+      "uid=1000"
+      "gid=100"
+      "allow_other"
+      "auto_unmount"
+      "defaults"
+    ];
+  };
 }

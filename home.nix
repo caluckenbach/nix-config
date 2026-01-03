@@ -10,9 +10,6 @@
   home.homeDirectory = "/home/morpheus";
   home.stateVersion = "25.11";
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [

@@ -19,6 +19,12 @@
     let
       system = "aarch64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      hmModule = {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.users.morpheus = import ./home.nix;
+        home-manager.extraSpecialArgs = { inherit inputs; };
+      };
     in
     {
       nixosConfigurations = {
@@ -29,12 +35,7 @@
           modules = [
             ./hosts/vm/configuration.nix
             home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.morpheus = import ./home.nix;
-              home-manager.extraSpecialArgs = { inherit inputs; };
-            }
+            hmModule
           ];
         };
 
@@ -45,12 +46,7 @@
           modules = [
             ./hosts/vps/configuration.nix
             home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.morpheus = import ./home.nix;
-              home-manager.extraSpecialArgs = { inherit inputs; };
-            }
+            hmModule
           ];
         };
       };

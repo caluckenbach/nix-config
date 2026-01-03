@@ -26,9 +26,9 @@
     };
   };
 
-  # Add your SSH public key here
+  # SSH public key (edit keys/morpheus.pub)
   users.users.morpheus.openssh.authorizedKeys.keys = [
-    # "ssh-ed25519 AAAA... your-key-here"
+    (builtins.readFile ../../keys/morpheus.pub)
   ];
 
   # Fail2ban for additional security

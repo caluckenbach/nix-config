@@ -3,7 +3,6 @@
     aerospace
     brave
     claude-code
-    telegram-desktop
     anki
     zotero
     orbstack

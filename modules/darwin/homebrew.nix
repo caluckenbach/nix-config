@@ -15,7 +15,9 @@ in {
       "figma"
       "protonvpn"
       "raycast"
+      "spotify"
       "sublime-text"
+      "telegram"
     ];
   };
 

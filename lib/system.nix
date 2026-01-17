@@ -26,7 +26,9 @@ inputs: self: super: let
 
   # Overlays for additional packages
   overlays = [
-    inputs.zjstatus.overlays.default
+    (final: prev: {
+      zjstatus = inputs.zjstatus.packages.${prev.stdenv.hostPlatform.system}.default;
+    })
   ];
 in {
   nixosSystem' = module: super.nixosSystem {

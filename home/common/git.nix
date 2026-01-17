@@ -41,14 +41,10 @@ in {
   };
 
   programs.git = enabled {
-    userName  = "Constantin Luckenbach";
-    userEmail = "cluckenbach@protonmail.com";
+    settings = {
+      user.name  = "Constantin Luckenbach";
+      user.email = "cluckenbach@protonmail.com";
 
-    difftastic = enabled {
-      background = "dark";
-    };
-
-    extraConfig = {
       init.defaultBranch   = "main";
       push.autoSetupRemote = true;
       pull.rebase          = true;
@@ -56,6 +52,11 @@ in {
       rebase.autoSquash    = true;
       rerere.enabled       = true;
     };
+  };
+
+  programs.difftastic = enabled {
+    git.enable = true;
+    options.background = "dark";
   };
 
   programs.jujutsu = enabled {

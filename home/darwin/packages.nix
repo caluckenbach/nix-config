@@ -1,5 +1,10 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
-    # Darwin-specific packages can go here
+    claude-code
+    raycast
+    telegram-desktop
+    anki
+    zotero
+    orbstack
   ];
 }

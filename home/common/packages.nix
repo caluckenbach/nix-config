@@ -1,19 +1,50 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
+    # Core utilities
     stow
     ripgrep
     eza
     fd
     gh
     htop
+    tree
+    jq
+
+    # File viewers
     yazi
+    glow
+    bat
+    jless
+
+    # Dev tools
     lazygit
+    gitui
+    tokei
+
+    # Media
+    ffmpeg
+    yt-dlp
+
+    # HTTP & JSON
+    xh
+    jnv
+
+    # AI/LLM
+    llm
+    opencode
+
+    # Documentation
+    tealdeer
+
+    # Security
+    gnupg
+
+    # Languages & runtimes
     bun
     uv
     rustup
     bacon
     gcc
-    fastfetch
 
     # LSP and formatters
     nil
@@ -22,5 +53,8 @@
     stylua
     ruff
     ty
+
+    # System info
+    fastfetch
   ];
 }

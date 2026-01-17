@@ -1,9 +1,8 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     aerospace
     brave
     claude-code
-    raycast
     telegram-desktop
     anki
     zotero

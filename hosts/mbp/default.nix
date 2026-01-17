@@ -2,6 +2,7 @@ lib: lib.darwinSystem' ({ config, lib, pkgs, ... }: {
   type = "desktop";
 
   nixpkgs.hostPlatform = "aarch64-darwin";
+  nixpkgs.config.allowUnfree = true;
 
   # Determinate Nix manages the daemon
   nix.enable = false;

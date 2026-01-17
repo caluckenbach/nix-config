@@ -1,8 +1,6 @@
 { config, lib, pkgs, ... }: let
   inherit (lib) mkIf;
 in {
-  nixpkgs.config.allowUnfree = true;
-
   nix = {
     settings = {
       experimental-features = [

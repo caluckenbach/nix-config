@@ -7,14 +7,13 @@ in {
 
       settings = {
         theme              = "gruvbox-dark";
-        default_layout     = "mission-control";
+        default_layout     = "missioncontrol";
         show_startup_tips  = false;
       };
 
-      layouts.battlestation = ''
+      layouts.missioncontrol = ''
         layout {
             default_tab_template {
-                children
                 pane size=1 borderless=true {
                     plugin location="file:${pkgs.zjstatus}/bin/zjstatus.wasm" {
                         format_left   "{mode} {session}"
@@ -22,22 +21,19 @@ in {
                         format_right  "{datetime}"
                     }
                 }
+                children
             }
 
-            swap_tiled_layout name="mission-control" {
-                tab focus=true hide_floating_panes=true {
-                    pane split_direction="vertical" {
-                        pane size="30%" {
-                            pane cwd="dev" size="50%"
-                            pane cwd="dev" size="50%"
+            tab focus=true {
+                pane split_direction="vertical" {
+                    pane command="claude" size="30%"
+                    pane focus=true size="45%"
+                    pane size="25%" split_direction="horizontal" {
+                        pane command="bash" {
+                            args "-c" "if jj root &>/dev/null; then jj status; else git status; fi"
                         }
-                        pane command="zellij" cwd="dev" focus=true size="45%" {
-                            args "action" "dump-layout"
-                            start_suspended true
-                        }
-                        pane size="25%" {
-                            pane cwd="dev" size="50%"
-                            pane cwd="dev" size="50%"
+                        pane command="bash" {
+                            args "-c" "if jj root &>/dev/null; then jj log; else git log --oneline -20; fi"
                         }
                     }
                 }

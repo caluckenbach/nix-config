@@ -1,7 +1,9 @@
-{ config, ... }: {
+{ config, ... }: let
+  inherit (config) theme;
+in {
   xdg.configFile."ghostty/config".text = ''
-    font-family = TX-02
-    font-size = 15
+    font-family = ${theme.font.mono}
+    font-size = ${toString theme.font.size}
     theme = Gruvbox Dark
 
     # Hide window decorations and tab bar

@@ -52,6 +52,12 @@ darwin-rebuild switch --flake .#mbp
 darwin-rebuild switch --flake .#mbp |& nom
 ```
 
+**Update Homebrew packages (managed via nix-homebrew):**
+```sh
+nix flake update homebrew-core homebrew-cask
+darwin-rebuild switch --flake .#mbp
+```
+
 ### NixOS (Linux)
 
 **Rebuild system:**

@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }: let
   inherit (lib) enabled;
+  inherit (config) theme;
+  c = theme.colors;
 in {
   xsession = enabled {
     windowManager.i3 = enabled {
@@ -10,22 +12,22 @@ in {
             position      = "bottom";
             statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${config.xdg.configHome}/i3status-rust/config-bottom.toml";
             colors = {
-              background = "#282828";
-              statusline = "#ebdbb2";
+              background = "#${c.bg1}";
+              statusline = "#${c.fg}";
               focusedWorkspace = {
-                border     = "#458588";
-                background = "#458588";
-                text       = "#ebdbb2";
+                border     = "#${c.blue}";
+                background = "#${c.blue}";
+                text       = "#${c.fg}";
               };
               inactiveWorkspace = {
-                border     = "#282828";
-                background = "#282828";
-                text       = "#928374";
+                border     = "#${c.bg1}";
+                background = "#${c.bg1}";
+                text       = "#${c.gray}";
               };
             };
             fonts = {
-              names = [ "TX-02" ];
-              size  = 12.0;
+              names = [ theme.font.mono ];
+              size  = theme.font.size * 1.0;
             };
           }
         ];

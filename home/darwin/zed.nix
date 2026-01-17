@@ -1,4 +1,6 @@
-{ ... }: {
+{ config, ... }: let
+  inherit (config) theme;
+in {
   # Zed editor configuration
   xdg.configFile."zed/settings.json".text = builtins.toJSON {
     auto_install_extensions = {
@@ -11,7 +13,7 @@
 
     features.edit_prediction_provider = "zed";
 
-    buffer_font_family = "TX-02";
+    buffer_font_family = theme.font.mono;
     cursor_blink       = false;
 
     scrollbar.show = "never";
@@ -61,8 +63,8 @@
 
     calls.mute_on_join = true;
 
-    ui_font_size   = 15;
-    ui_font_family = "TX-02";
+    ui_font_size   = theme.font.size;
+    ui_font_family = theme.font.mono;
 
     vertical_scroll_margin = 8;
     relative_line_numbers  = true;

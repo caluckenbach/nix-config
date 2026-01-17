@@ -20,6 +20,7 @@
     lazygit
     gitui
     tokei
+    nix-output-monitor
 
     # Media
     ffmpeg

@@ -29,15 +29,8 @@ in {
     glp   = "git log --patch --ext-diff";
     gstat = "git status";
 
-    # Jujutsu
-    jl  = "jj log";
-    jd  = "jj diff";
-    jn  = "jj new";
-    js  = "jj status";
-    jds = "jj describe";
-
     # Tools
-    lg = "lazygit";
+    gui = "gitui";
   };
 
   programs.git = enabled {
@@ -59,21 +52,4 @@ in {
     options.background = "dark";
   };
 
-  programs.jujutsu = enabled {
-    settings = {
-      user = {
-        name  = "Constantin Luckenbach";
-        email = "cluckenbach@protonmail.com";
-      };
-      ui = {
-        editor         = "nvim";
-        diff-formatter = [ "difft" "--color=always" "$left" "$right" ];
-        diff-editor    = ":builtin";
-      };
-      signing = {
-        behavior = "own";
-        backend  = "gpg";
-      };
-    };
-  };
 }

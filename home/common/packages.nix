@@ -17,8 +17,6 @@
     jless
 
     # Dev tools
-    lazygit
-    gitui
     tokei
     nix-output-monitor
 

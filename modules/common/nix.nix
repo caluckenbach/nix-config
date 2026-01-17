@@ -3,8 +3,16 @@
 in {
   nixpkgs.config.allowUnfree = true;
 
-  # Nix daemon settings only on Linux (Darwin uses Determinate Nix)
-  nix = mkIf config.isLinux {
+  nix = {
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+        "pipe-operators"
+      ];
+      warn-dirty = false;
+    };
+  } // (if config.isLinux then {
     channel.enable = false;
 
     gc = {
@@ -14,18 +22,10 @@ in {
       persistent = true;
     };
 
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-        "pipe-operators"
-      ];
-      trusted-users = [ "root" "@wheel" ];
-      warn-dirty    = false;
-    };
+    settings.trusted-users = [ "root" "@wheel" ];
 
     optimise.automatic = true;
-  };
+  } else {});
 
   environment.systemPackages = with pkgs; [
     nh

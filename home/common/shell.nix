@@ -39,6 +39,11 @@ in {
       # Neovim
       vim    = "nvim";
       nvimpz = "PUZZLE_MODE=1 nvim";
+
+      # Nix with pretty output
+      nb = "nom build";
+      nd = "nom develop";
+      ns = "nom shell";
     };
 
     initContent = ''

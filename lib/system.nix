@@ -23,6 +23,11 @@ inputs: self: super: let
     inherit inputs;
     lib = self;
   };
+
+  # Overlays for additional packages
+  overlays = [
+    inputs.zjstatus.overlays.default
+  ];
 in {
   nixosSystem' = module: super.nixosSystem {
     inherit specialArgs;
@@ -31,6 +36,7 @@ in {
       module
 
       {
+        nixpkgs.overlays = overlays;
         home-manager.sharedModules = inputHomeModules ++ homeCommon ++ homeLinux;
       }
     ] ++ modulesCommon
@@ -45,6 +51,7 @@ in {
       module
 
       {
+        nixpkgs.overlays = overlays;
         home-manager.sharedModules = inputHomeModules ++ homeCommon ++ homeDarwin;
       }
     ] ++ modulesCommon

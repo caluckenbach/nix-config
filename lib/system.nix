@@ -5,10 +5,6 @@ inputs: self: super: let
   modulesLinux  = collectNix ../modules/linux;
   modulesDarwin = collectNix ../modules/darwin;
 
-  homeCommon = collectNix ../home/common;
-  homeLinux  = collectNix ../home/linux;
-  homeDarwin = collectNix ../home/darwin;
-
   collectInputs = let
     inputs' = attrValues inputs;
   in path: inputs'
@@ -19,27 +15,29 @@ inputs: self: super: let
   inputModulesLinux  = collectInputs [ "nixosModules"  "default" ];
   inputModulesDarwin = collectInputs [ "darwinModules" "default" ];
 
+  inputOverlays = collectInputs [ "overlays" "default" ];
+  overlayModule = {
+    nixpkgs.overlays = inputOverlays ++ [
+      (final: prev: {
+        zjstatus = inputs.zjstatus.packages.${prev.stdenv.hostPlatform.system}.default;
+      })
+    ];
+  };
+
   specialArgs = inputs // {
     inherit inputs;
     lib = self;
   };
-
-  # Overlays for additional packages
-  overlays = [
-    (final: prev: {
-      zjstatus = inputs.zjstatus.packages.${prev.stdenv.hostPlatform.system}.default;
-    })
-  ];
 in {
   nixosSystem' = module: super.nixosSystem {
     inherit specialArgs;
 
     modules = [
       module
+      overlayModule
 
       {
-        nixpkgs.overlays = overlays;
-        home-manager.sharedModules = inputHomeModules ++ homeCommon ++ homeLinux;
+        home-manager.sharedModules = inputHomeModules;
       }
     ] ++ modulesCommon
       ++ modulesLinux
@@ -51,10 +49,10 @@ in {
 
     modules = [
       module
+      overlayModule
 
       {
-        nixpkgs.overlays = overlays;
-        home-manager.sharedModules = inputHomeModules ++ homeCommon ++ homeDarwin;
+        home-manager.sharedModules = inputHomeModules;
       }
     ] ++ modulesCommon
       ++ modulesDarwin

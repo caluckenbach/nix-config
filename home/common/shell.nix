@@ -15,16 +15,19 @@ in {
     };
 
     sessionVariables = {
-      LANG = "en_US.UTF-8";
+      LANG   = "en_US.UTF-8";
+      EDITOR = "nvim";
     };
 
     shellAliases = {
-      # File operations (eza with icons)
+      # File listing (eza)
       ls   = "eza -F --group-directories-first --color=always --icons";
       la   = "eza -alF --group-directories-first --color=always --icons";
       ll   = "eza -lF --group-directories-first";
       lt   = "eza -aTF --level=2 --group-directories-first --icons --color=always";
       tree = "eza --tree";
+
+      # Tools
       cat  = "bat";
       grep = "rg";
 
@@ -34,33 +37,32 @@ in {
       rm = "rm -i";
 
       # Neovim
-      vim = "nvim";
-
-      # Git
-      g     = "git";
-      gp    = "git push";
-      gpf   = "git push --force";
-      gpl   = "git pull";
-      gpls  = "git pull --recurse-submodules";
-      gst   = "git stash";
-      gstp  = "git stash pop";
-      gs    = "git switch";
-      gsc   = "git switch -c";
-      gco   = "git checkout";
-      grb   = "git rebase";
-      gcan  = "git commit --amend --no-edit";
-      gsh   = "git show --ext-diff";
-      gl    = "git log -p --ext-diff";
-
-      # Tools
-      lg = "lazygit";
+      vim    = "nvim";
+      nvimpz = "PUZZLE_MODE=1 nvim";
     };
 
     initContent = ''
-      # ldot function (list dotfiles)
+      # Homebrew (if present)
+      if [[ -d "/opt/homebrew" ]]; then
+        export HOMEBREW_NO_ANALYTICS=1
+        export HOMEBREW_NO_ENV_HINTS=1
+      fi
+
+      # PATH additions
+      typeset -U path
+      local path_candidates=(
+        "$HOME/.local/bin"
+        "$HOME/.cargo/bin"
+        "$HOME/.bun/bin"
+      )
+      for p in "''${path_candidates[@]}"; do
+        [[ -d "$p" ]] && path+=("$p")
+      done
+      export PATH
+
+      # Functions
       ldot() { eza -a | rg "^\." }
 
-      # gprn - prune gone branches
       gprn() {
         git fetch --all --prune
         git branch -v | awk '/\[gone\]/ {print $1}' | while read branch; do
@@ -68,24 +70,25 @@ in {
         done
       }
 
-      # y - yazi with cd on exit
-      y() {
-        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-        yazi "$@" --cwd-file="$tmp"
-        IFS= read -r -d "" cwd < "$tmp"
-        [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
-        rm -f -- "$tmp"
-      }
-
-      # PATH additions
-      typeset -U path
-      [[ -d "$HOME/.local/bin" ]] && path+=("$HOME/.local/bin")
-      [[ -d "$HOME/.cargo/bin" ]] && path+=("$HOME/.cargo/bin")
-      export PATH
+      # Load local config if exists
+      [[ -f "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
     '';
   };
 
   programs.starship = enabled {
     enableZshIntegration = true;
+    settings = {
+      command_timeout = 1000;
+      memory_usage = {
+        disabled  = false;
+        format    = "\\[RAM Usage: [\${ram_pct}]($style)\\] ";
+        threshold = 80;
+        style     = "208";
+      };
+      lua = {
+        format = "using [$symbol]($style) ";
+        symbol = "";
+      };
+    };
   };
 }

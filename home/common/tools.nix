@@ -15,4 +15,12 @@ in {
   programs.zoxide = enabled {
     enableZshIntegration = true;
   };
+
+  programs.atuin = enabled {
+    enableZshIntegration = true;
+  };
+
+  programs.yazi = enabled {
+    enableZshIntegration = true;
+  };
 }

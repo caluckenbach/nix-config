@@ -1,2 +1,1 @@
-# Replace this with your SSH public key (ssh-ed25519 or ssh-rsa)
-# Example: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAA... user@host
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAEXAMPLEPLACEHOLDERKEYREPLACETHIS morpheus@nixos

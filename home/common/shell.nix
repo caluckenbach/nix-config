@@ -1,0 +1,91 @@
+{ lib, ... }: let
+  inherit (lib) enabled;
+in {
+  programs.zsh = enabled {
+    autosuggestion.enable     = true;
+    syntaxHighlighting.enable = true;
+
+    history = {
+      size        = 50000;
+      save        = 50000;
+      ignoreDups  = true;
+      ignoreSpace = true;
+      share       = true;
+      extended    = true;
+    };
+
+    sessionVariables = {
+      LANG = "en_US.UTF-8";
+    };
+
+    shellAliases = {
+      # File operations (eza with icons)
+      ls   = "eza -F --group-directories-first --color=always --icons";
+      la   = "eza -alF --group-directories-first --color=always --icons";
+      ll   = "eza -lF --group-directories-first";
+      lt   = "eza -aTF --level=2 --group-directories-first --icons --color=always";
+      tree = "eza --tree";
+      cat  = "bat";
+      grep = "rg";
+
+      # Safe file operations
+      cp = "cp -i";
+      mv = "mv -i";
+      rm = "rm -i";
+
+      # Neovim
+      vim = "nvim";
+
+      # Git
+      g     = "git";
+      gp    = "git push";
+      gpf   = "git push --force";
+      gpl   = "git pull";
+      gpls  = "git pull --recurse-submodules";
+      gst   = "git stash";
+      gstp  = "git stash pop";
+      gs    = "git switch";
+      gsc   = "git switch -c";
+      gco   = "git checkout";
+      grb   = "git rebase";
+      gcan  = "git commit --amend --no-edit";
+      gsh   = "git show --ext-diff";
+      gl    = "git log -p --ext-diff";
+
+      # Tools
+      lg = "lazygit";
+    };
+
+    initContent = ''
+      # ldot function (list dotfiles)
+      ldot() { eza -a | rg "^\." }
+
+      # gprn - prune gone branches
+      gprn() {
+        git fetch --all --prune
+        git branch -v | awk '/\[gone\]/ {print $1}' | while read branch; do
+          git branch -D "$branch"
+        done
+      }
+
+      # y - yazi with cd on exit
+      y() {
+        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+        yazi "$@" --cwd-file="$tmp"
+        IFS= read -r -d "" cwd < "$tmp"
+        [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+        rm -f -- "$tmp"
+      }
+
+      # PATH additions
+      typeset -U path
+      [[ -d "$HOME/.local/bin" ]] && path+=("$HOME/.local/bin")
+      [[ -d "$HOME/.cargo/bin" ]] && path+=("$HOME/.cargo/bin")
+      export PATH
+    '';
+  };
+
+  programs.starship = enabled {
+    enableZshIntegration = true;
+  };
+}

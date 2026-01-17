@@ -1,21 +1,20 @@
-# VM-specific configuration (VMware Fusion)
-{ config, pkgs, ... }:
+lib: lib.nixosSystem' ({ config, lib, pkgs, ... }: let
+  inherit (lib) collectNix remove;
+in {
+  imports = collectNix ./.
+    |> remove ./default.nix;
 
-{
-  imports = [
-    ./hardware-configuration.nix
-    ../../modules/common.nix
-  ];
+  type = "desktop";
 
   # Bootloader
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable      = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "nixos-vm";
 
   # Configure keymap in X11
   services.xserver.xkb = {
-    layout = "us";
+    layout  = "us";
     variant = "";
   };
 
@@ -28,7 +27,7 @@
   hardware.graphics.enable = true;
 
   services.xserver = {
-    enable = true;
+    enable                   = true;
     displayManager.startx.enable = true;
   };
 
@@ -40,8 +39,8 @@
 
   # VMware shared folders
   fileSystems."/mnt/hgfs" = {
-    device = ".host:/";
-    fsType = "fuse./run/current-system/sw/bin/vmhgfs-fuse";
+    device  = ".host:/";
+    fsType  = "fuse./run/current-system/sw/bin/vmhgfs-fuse";
     options = [
       "umask=22"
       "uid=1000"
@@ -51,4 +50,11 @@
       "defaults"
     ];
   };
-}
+
+  # Auto-start X on tty1
+  home-manager.users.morpheus.programs.zsh.profileExtra = ''
+    if [ -z "$DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
+      exec startx
+    fi
+  '';
+})

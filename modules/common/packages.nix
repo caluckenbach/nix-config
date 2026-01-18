@@ -39,6 +39,7 @@
     gnupg
 
     # Languages & runtimes
+    nodejs
     bun
     uv
     rustup

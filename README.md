@@ -29,6 +29,21 @@ Multi-platform Nix configuration for NixOS (Linux) and nix-darwin (macOS) using 
 
 ## Usage
 
+This flake uses experimental Nix features (`pipe-operators`). These must be enabled before the flake can be evaluated.
+
+**Option 1: Global config (recommended)**
+```sh
+mkdir -p ~/.config/nix
+echo "experimental-features = nix-command flakes pipe-operators" > ~/.config/nix/nix.conf
+```
+
+**Option 2: Pass flag each time**
+```sh
+nix --extra-experimental-features pipe-operators <command>
+# or with nh
+nh darwin build . -- --extra-experimental-features pipe-operators
+```
+
 ### macOS (nix-darwin)
 
 **First time setup:**
@@ -36,40 +51,36 @@ Multi-platform Nix configuration for NixOS (Linux) and nix-darwin (macOS) using 
 # Install nix (if not already installed)
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 
+# Enable experimental features (required to evaluate flake)
+mkdir -p ~/.config/nix
+echo "experimental-features = nix-command flakes pipe-operators" > ~/.config/nix/nix.conf
+
 # Clone and apply
 git clone https://github.com/caluckenbach/nixos-config.git
 cd nixos-config
 nix run nix-darwin -- switch --flake .#mbp
 ```
 
-**Rebuild after changes:**
+**Rebuild after changes (nh includes pretty output via nom):**
 ```sh
-darwin-rebuild switch --flake .#mbp
-```
-
-**With pretty output (nom):**
-```sh
-darwin-rebuild switch --flake .#mbp |& nom
+nh darwin switch .
+# or build only
+nh darwin build .
 ```
 
 **Update Homebrew packages (managed via nix-homebrew):**
 ```sh
 nix flake update homebrew-core homebrew-cask
-darwin-rebuild switch --flake .#mbp
+nh darwin switch .
 ```
 
 ### NixOS (Linux)
 
 **Rebuild system:**
 ```sh
-sudo nixos-rebuild switch --flake .#vm
-# or
-sudo nixos-rebuild switch --flake .#vps
-```
-
-**With pretty output:**
-```sh
-sudo nixos-rebuild switch --flake .#vm |& nom
+nh os switch .
+# or build only
+nh os build .
 ```
 
 ## Hosts
@@ -93,6 +104,35 @@ sudo nixos-rebuild switch --flake .#vm |& nom
 - Starship prompt
 - Ghostty terminal
 - Zellij multiplexer with zjstatus
+
+## Keybindings
+
+Modifier hierarchy for consistent muscle memory across tools:
+- **Ctrl** = Pane operations (Zellij)
+- **Cmd** = Tab operations (Ghostty)
+- **+ Shift** = Destructive/moving operations
+- **+ Alt** = Resize operations
+
+### Zellij (Panes)
+
+| Action | Keybind |
+|--------|---------|
+| Navigate panes | `Ctrl+h/j/k/l` |
+| Move panes | `Ctrl+Shift+h/j/k/l` |
+| Resize panes | `Ctrl+Alt+h/j/k/l` |
+| New pane down | `Ctrl+p d` |
+| New pane right | `Ctrl+p r` |
+| Close pane | `Ctrl+p x` |
+| Toggle floating | `Alt+f` |
+
+### Ghostty (Tabs)
+
+| Action | Keybind |
+|--------|---------|
+| New tab | `Cmd+t` |
+| Close tab | `Cmd+w` |
+| Previous tab | `Cmd+Shift+[` |
+| Next tab | `Cmd+Shift+]` |
 
 ### Development
 - **Editors:** Neovim, Helix, Zed (macOS)

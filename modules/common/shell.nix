@@ -89,6 +89,7 @@ in {
       enableZshIntegration = true;
       settings = {
         command_timeout = 1000;
+        aws.disabled = true;
         memory_usage = {
           disabled  = false;
           format    = "\\[RAM Usage: [\${ram_pct}]($style)\\] ";

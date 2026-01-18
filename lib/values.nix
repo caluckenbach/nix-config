@@ -1,5 +1,5 @@
 _: self: _: let
-  inherit (self) mkMerge;
+  inherit (self) merge mkMerge;
 in {
   merge = mkMerge [] // {
     __functor = self: next: self // {
@@ -7,6 +7,6 @@ in {
     };
   };
 
-  enabled  = self.merge { enable = true; };
-  disabled = self.merge { enable = false; };
+  enabled  = merge { enable = true; };
+  disabled = merge { enable = false; };
 }

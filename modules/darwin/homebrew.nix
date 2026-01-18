@@ -7,12 +7,14 @@ in {
       cleanup    = "zap";
     };
 
+    # TODO: Periodically check if these become available/fixed in nixpkgs
     brews = [
       "gitui"  # Broken in nixpkgs on aarch64-darwin
     ];
 
     casks = [
       "figma"
+      "ghostty"
       "protonvpn"
       "raycast"
       "spotify"

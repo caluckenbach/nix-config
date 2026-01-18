@@ -10,7 +10,7 @@ in {
   boot.loader.systemd-boot.enable      = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos-vm";
+  networking.hostName = "vm";
 
   # Configure keymap in X11
   services.xserver.xkb = {

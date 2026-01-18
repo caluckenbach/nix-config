@@ -10,6 +10,8 @@ in {
     # TODO: Periodically check if these become available/fixed in nixpkgs
     brews = [
       "gitui"  # Broken in nixpkgs on aarch64-darwin
+      "mole"
+      "mas"
     ];
 
     casks = [
@@ -21,6 +23,13 @@ in {
       "sublime-text"
       "telegram"
     ];
+
+    masApps = {
+      "Maccy"      = 1527619437;
+      "MeetingBar" = 1532419400;
+      "Theine"     = 955848755;
+      "Xcode"      = 497799835;
+    };
   };
 
   nix-homebrew = enabled {

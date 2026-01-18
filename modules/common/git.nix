@@ -35,10 +35,19 @@ in {
     };
 
     programs.git = enabled {
+      signing = {
+        key = "7B0964DD92945BF9";
+        signByDefault = true;
+      };
+
       settings = {
         user.name  = "Constantin Luckenbach";
         user.email = "cluckenbach@protonmail.com";
 
+        commit.gpgsign       = true;
+        tag.gpgsign          = true;
+        gpg.program          = "/etc/profiles/per-user/cal/bin/gpg";
+        core.ignorecase      = false;
         init.defaultBranch   = "main";
         push.autoSetupRemote = true;
         pull.rebase          = true;

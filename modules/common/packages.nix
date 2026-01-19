@@ -17,6 +17,7 @@
     jless
 
     # Dev tools
+    just
     tokei
     nix-output-monitor
 

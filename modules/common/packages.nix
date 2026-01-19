@@ -29,6 +29,7 @@
     jnv
 
     # AI/LLM
+    claude-code
     llm
     opencode
 
@@ -56,5 +57,8 @@
 
     # System info
     fastfetch
+
+    # CLIs
+    azure-cli
   ];
 }

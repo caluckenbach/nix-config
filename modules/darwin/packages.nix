@@ -2,7 +2,6 @@
   environment.systemPackages = with pkgs; [
     aerospace
     brave
-    claude-code
     anki
     zotero
     orbstack

@@ -7,11 +7,15 @@ in {
       package = mkIf config.isDarwin null;
 
       settings = with config.theme; {
-        font-family = font.mono;
-        font-size   = font.size;
-        theme       = "Gruvbox Dark";
+        font-family  = font.mono;
+        font-size    = font.size;
+        font-thicken = true;
+        theme        = "Gruvbox Dark";
 
-        window-decoration = "none";
+        window-height = 48;
+        window-width  = 140;
+
+        #window-decoration = "none";
         gtk-titlebar      = false;
 
         window-padding-x     = ui.padding;

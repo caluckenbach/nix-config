@@ -17,6 +17,7 @@ in {
     casks = [
       "figma"
       "ghostty"
+      "microsoft-teams"
       "protonvpn"
       "raycast"
       "spotify"

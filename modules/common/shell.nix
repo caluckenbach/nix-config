@@ -1,8 +1,10 @@
 { lib, ... }: let
   inherit (lib) enabled;
 in {
-  home-manager.sharedModules = [{
+  home-manager.sharedModules = [({ config, ... }: {
     programs.zsh = enabled {
+      dotDir = "${config.xdg.configHome}/zsh";
+
       autosuggestion.enable     = true;
       syntaxHighlighting.enable = true;
 
@@ -102,5 +104,5 @@ in {
         };
       };
     };
-  }];
+  })];
 }

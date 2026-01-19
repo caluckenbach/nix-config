@@ -49,11 +49,13 @@
 
     # LSP and formatters
     nil
-    nixfmt-rfc-style
+    nixfmt
     lua-language-server
     stylua
     ruff
     ty
+    typescript-go
+    biome
 
     # System info
     fastfetch

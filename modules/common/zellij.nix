@@ -171,6 +171,9 @@ in {
                 }
             }
             shared_except "locked" {
+                // Pass Shift+Enter through to applications (e.g., Claude Code newline)
+                bind "Shift Enter" { Write 27 91 49 51 59 50 117; }
+
                 // Pane navigation: Ctrl + h/j/k/l
                 bind "Ctrl h" { MoveFocus "Left"; }
                 bind "Ctrl j" { MoveFocus "Down"; }

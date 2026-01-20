@@ -1,4 +1,4 @@
-{ homebrew-core, homebrew-cask, config, lib, ... }: let
+{ homebrew-core, homebrew-cask, homebrew-twilio, config, lib, ... }: let
   inherit (lib) enabled;
 in {
   homebrew = enabled {
@@ -10,8 +10,10 @@ in {
     # TODO: Periodically check if these become available/fixed in nixpkgs
     brews = [
       "gitui"  # Broken in nixpkgs on aarch64-darwin
-      "mole"
+      "livekit-cli"
       "mas"
+      "mole"
+      "twilio"
     ];
 
     casks = [
@@ -40,6 +42,7 @@ in {
     taps = {
       "homebrew/homebrew-core" = homebrew-core;
       "homebrew/homebrew-cask" = homebrew-cask;
+      "twilio/homebrew-brew"   = homebrew-twilio;
     };
 
     mutableTaps = false;

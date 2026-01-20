@@ -40,6 +40,10 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+    homebrew-twilio = {
+      url = "github:twilio/homebrew-brew";
+      flake = false;
+    };
   };
 
   outputs = inputs @ { nixpkgs, nix-darwin, ... }: let

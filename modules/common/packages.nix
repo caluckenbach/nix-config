@@ -62,6 +62,7 @@
     fastfetch
 
     # CLIs
+    awscli2
     azure-cli
   ];
 }

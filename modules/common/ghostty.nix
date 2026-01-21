@@ -57,7 +57,9 @@ in {
           "super+shift+d=new_split:down"
           "super+right_bracket=goto_split:next"
           "super+left_bracket=goto_split:previous"
-          "shift+enter=text:\\n"
+          # Previous Keybinds:
+          #   super+shift+r=reload_config
+          #   shift+enter=text:\n (removed - breaks Shift+Enter in apps like Claude Code)
         ];
       };
     };

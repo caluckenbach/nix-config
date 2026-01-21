@@ -17,6 +17,7 @@ in {
     ];
 
     casks = [
+      "anki"
       "figma"
       "ghostty"
       "microsoft-teams"
@@ -45,6 +46,6 @@ in {
       "twilio/homebrew-brew"   = homebrew-twilio;
     };
 
-    mutableTaps = false;
+    mutableTaps = true;
   };
 }

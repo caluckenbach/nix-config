@@ -171,7 +171,7 @@ in {
                 }
             }
             shared_except "locked" {
-                // Pass Shift+Enter through to applications (e.g., Claude Code newline)
+                // Pass Shift+Enter to apps (workaround for zellij-org/zellij#4159)
                 bind "Shift Enter" { Write 27 91 49 51 59 50 117; }
 
                 // Pane navigation: Ctrl + h/j/k/l

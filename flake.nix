@@ -13,7 +13,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-master.url = "github:nixos/nixpkgs/master";
 
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/master";
@@ -27,6 +26,11 @@
 
     zjstatus = {
       url = "github:dj95/zjstatus";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    codex = {
+      url = "github:openai/codex";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

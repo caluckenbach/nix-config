@@ -16,16 +16,11 @@ inputs: self: super: let
   inputModulesDarwin = collectInputs [ "darwinModules" "default" ];
 
   inputOverlays = collectInputs [ "overlays" "default" ];
-  masterPkgs = system: import inputs.nixpkgs-master {
-    inherit system;
-    config.allowUnfree = true;
-  };
   overlayModule = {
     nixpkgs.overlays = inputOverlays ++ [
       (final: prev: {
         zjstatus = inputs.zjstatus.packages.${prev.stdenv.hostPlatform.system}.default;
-        claude-code = (masterPkgs prev.stdenv.hostPlatform.system).claude-code;
-        opencode = (masterPkgs prev.stdenv.hostPlatform.system).opencode;
+        codex = inputs.codex.packages.${prev.stdenv.hostPlatform.system}.default;
       })
     ];
   };

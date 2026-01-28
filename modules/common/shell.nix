@@ -47,28 +47,32 @@ in {
         nb = "nom build";
         nd = "nom develop";
         ns = "nom shell";
+
+        # Full rebuild with flake update + homebrew upgrade
+        rebuild = "ulimit -n 4096 && nix flake update --flake ~/code/nix-cfg/nixos-config && sudo nix run nix-darwin -- switch --flake ~/code/nix-cfg/nixos-config#mbp --option extra-experimental-features pipe-operators |& nom";
       };
 
       initContent = ''
         # PATH setup (order matters: earlier = higher priority)
         typeset -U path
 
-        # User paths (highest priority, prepended)
+        # User paths (highest priority, prepended before nix paths)
         local user_paths=(
           "$HOME/.local/bin"
           "$HOME/.cargo/bin"
-          "$HOME/.bun/bin"
         )
         for p in "''${user_paths[@]}"; do
           [[ -d "$p" ]] && path=("$p" $path)
         done
 
-        # Homebrew (lowest priority, appended after nix paths)
+        # Homebrew and bun (lower priority, appended after nix paths)
         if [[ -d "/opt/homebrew" ]]; then
           export HOMEBREW_NO_ANALYTICS=1
           export HOMEBREW_NO_ENV_HINTS=1
           path+=("/opt/homebrew/bin" "/opt/homebrew/sbin")
         fi
+        [[ -d "$HOME/.bun/bin" ]]       && path+=("$HOME/.bun/bin")
+        [[ -d "$HOME/.cache/.bun/bin" ]] && path+=("$HOME/.cache/.bun/bin")
 
         export PATH
 

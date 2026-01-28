@@ -30,9 +30,8 @@
     jnv
 
     # AI/LLM
-    claude-code
+    # codex  # TODO: upstream build broken (rama-boring-sys fails)
     llm
-    opencode
 
     # Documentation
     tealdeer

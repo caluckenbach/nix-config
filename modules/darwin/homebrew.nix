@@ -3,7 +3,8 @@
 in {
   homebrew = enabled {
     onActivation = {
-      autoUpdate = false;
+      autoUpdate = true;   # brew update
+      upgrade    = true;   # brew upgrade
       cleanup    = "zap";
     };
 
@@ -13,11 +14,14 @@ in {
       "livekit-cli"
       "mas"
       "mole"
+      "opencode"  # Coding agent - homebrew updates faster than nixpkgs
       "twilio"
     ];
 
     casks = [
       "anki"
+      "claude-code"  # Coding agent - homebrew updates faster than nixpkgs
+      "codex"  # Coding agent - cask, not brew
       "figma"
       "ghostty"
       "microsoft-teams"

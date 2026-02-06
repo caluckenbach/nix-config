@@ -1,4 +1,4 @@
-{ lib, ... }: let
+{ config, lib, ... }: let
   inherit (lib) enabled;
 in {
   home-manager.sharedModules = [{
@@ -46,7 +46,6 @@ in {
 
         commit.gpgsign       = true;
         tag.gpgsign          = true;
-        gpg.program          = "/etc/profiles/per-user/cal/bin/gpg";
         core.ignorecase      = false;
         init.defaultBranch   = "main";
         push.autoSetupRemote = true;
@@ -54,6 +53,8 @@ in {
         rebase.autoStash     = true;
         rebase.autoSquash    = true;
         rerere.enabled       = true;
+      } // lib.optionalAttrs config.isDarwin {
+        gpg.program = "/etc/profiles/per-user/${config.system.primaryUser or "cal"}/bin/gpg";
       };
     };
 

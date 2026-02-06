@@ -1,9 +1,9 @@
-{ lib, ... }: let
+{ config, lib, ... }: let
   inherit (lib) enabled;
 in {
-  home-manager.sharedModules = [({ config, ... }: {
+  home-manager.sharedModules = [({ config = hmConfig, ... }: {
     programs.zsh = enabled {
-      dotDir = "${config.xdg.configHome}/zsh";
+      dotDir = "${hmConfig.xdg.configHome}/zsh";
 
       autosuggestion.enable     = true;
       syntaxHighlighting.enable = true;
@@ -48,6 +48,7 @@ in {
         nd = "nom develop";
         ns = "nom shell";
 
+      } // lib.optionalAttrs config.isDarwin {
         # Full rebuild with flake update + homebrew upgrade
         rebuild = "ulimit -n 4096 && nix flake update --flake ~/code/nix-cfg/nixos-config && sudo nix run nix-darwin -- switch --flake ~/code/nix-cfg/nixos-config#mbp --option extra-experimental-features pipe-operators |& nom";
       };

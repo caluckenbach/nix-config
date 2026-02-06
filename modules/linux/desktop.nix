@@ -1,8 +1,11 @@
 { config, lib, pkgs, ... }: let
-  inherit (lib) enabled;
+  inherit (lib) enabled mkIf;
+  systemConfig = config;
   c = config.theme.colors;
-in {
-  home-manager.sharedModules = [{
+in mkIf config.isDesktop {
+  home-manager.sharedModules = [({ config, ... }: let
+    hmConfig = config;
+  in {
     xsession = enabled {
       windowManager.i3 = enabled {
         package = pkgs.i3;
@@ -10,7 +13,7 @@ in {
           bars = [
             {
               position      = "bottom";
-              statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${config.xdg.configHome}/i3status-rust/config-bottom.toml";
+              statusCommand = "${pkgs.i3status-rust}/bin/i3status-rs ${hmConfig.xdg.configHome}/i3status-rust/config-bottom.toml";
               colors = {
                 background = "#${c.bg1}";
                 statusline = "#${c.fg}";
@@ -26,8 +29,8 @@ in {
                 };
               };
               fonts = {
-                names = [ config.theme.font.mono ];
-                size  = config.theme.font.size * 1.0;
+                names = [ systemConfig.theme.font.mono ];
+                size  = systemConfig.theme.font.size * 1.0;
               };
             }
           ];
@@ -73,5 +76,5 @@ in {
         ];
       };
     };
-  }];
+  })];
 }

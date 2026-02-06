@@ -157,3 +157,9 @@ Modifier hierarchy for consistent muscle memory across tools:
 
 ### macOS Apps (via Homebrew)
 - Figma, ProtonVPN, Sublime Text
+
+## TODO
+- VPS: ensure `morpheus` has a password or passwordless sudo to avoid lockout when SSH password auth and root login are disabled.
+- Review Linux firewall defaults; currently disabled by default.
+- Consider avoiding `bun install -g` in activation scripts; move to declarative packages or pin versions.
+- README: reconcile formatter/tool list (mentions `nixfmt-rfc-style` but config installs `nixfmt`).
